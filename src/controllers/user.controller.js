@@ -307,7 +307,7 @@ const updateUserAvatar = asyncHandler(async (req, res) => {
     const oldAvatarUrl = req.user?.avatar;
     // Delete the old avatar from Cloudinary if it exists
     if (!oldAvatarUrl) {
-        throw new ApiError(400, "old Cover image url not found")
+        throw new ApiError(400, "old avatar url not found")
     }
     // Extract the public ID from the image URL (assuming Cloudinary URLs are in the format: https://res.cloudinary.com/<cloud_name>/image/upload/<public_id>)
     const publicId = oldAvatarUrl.split("/").pop().split(".")[0];
@@ -316,7 +316,7 @@ const updateUserAvatar = asyncHandler(async (req, res) => {
     const deletionResult = await cloudinary.uploader.destroy(publicId);
     ////////////////
 
-    // upload new cover image after deleting old cover image on cloudinary
+    // upload new avatar after deleting old cover image on cloudinary
     const avatar = await uploadOnCloudinary(avatarLocalPath)
 
     if (!avatar.url) {
